@@ -9,7 +9,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
-public class InterviewQuestion {
+public class RandomInterviewQuestion {
 
 	@Test
 	public void stringPermutations(){

@@ -57,7 +57,7 @@ public class Implementation {
 	/**
 	 * 
 	 */
-	@Test
+//	@Test
 	public void sherlockAndTheBeast(){
 		try(
 				FileReader input = new FileReader("resources/hackerRank/Implementation/sherlockAndTheBeast.txt");
@@ -93,6 +93,44 @@ public class Implementation {
 					} else {
 						System.out.println("-1");
 					}
+				}
+				
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	
+	@Test
+	public void utopianTree(){
+		try(
+				FileReader input = new FileReader("resources/hackerRank/Implementation/utopianTree.txt");
+//				InputStreamReader input = new InputStreamReader(System.in);
+				BufferedReader br = new BufferedReader(input);
+			)
+			{
+				int numTestCases = Integer.parseInt(br.readLine());
+				for (int testCase = 0; testCase < numTestCases; testCase++){
+					int size = 1;
+					int numCycles = Integer.parseInt(br.readLine());
+					
+					for(int cycle = 1; cycle <= numCycles; cycle++)
+					{
+						if(cycle % 2 == 0)
+						{
+							// Add 1
+							size += 1;
+						}
+						else
+						{
+							// Double
+							size = size * 2;
+						}
+					}
+					System.out.println(size);
 				}
 				
 			} catch (FileNotFoundException e) {
