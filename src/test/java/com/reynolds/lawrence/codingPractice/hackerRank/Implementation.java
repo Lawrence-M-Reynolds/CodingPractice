@@ -5,7 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -104,7 +112,7 @@ public class Implementation {
 			}
 	}
 	
-	@Test
+//	@Test
 	public void utopianTree(){
 		try(
 				FileReader input = new FileReader("resources/hackerRank/Implementation/utopianTree.txt");
@@ -134,6 +142,107 @@ public class Implementation {
 				}
 				
 			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	
+//	@Test
+	public void findDigits(){
+		long start = System.currentTimeMillis();
+		try(
+				FileReader input = new FileReader("resources/hackerRank/Implementation/findDigits.txt");
+//				InputStreamReader input = new InputStreamReader(System.in);
+				BufferedReader br = new BufferedReader(input);
+			)
+			{
+				int numTestCases = Integer.parseInt(br.readLine());
+				for(int testCase = 0; testCase < numTestCases; testCase++)
+				{
+					int value = Integer.parseInt(br.readLine());
+					int result = 0;
+					
+					char[] digits = Integer.toString(value).toCharArray();
+					for(char charDigit : digits)
+					{
+						int digit = Character.getNumericValue(charDigit);
+						if(digit != 0 && value % digit == 0)
+						{
+							result++;
+						}
+					}
+					System.out.println(result);
+				}
+
+				
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		long time = (System.currentTimeMillis() - start);
+		System.out.println("Time: " + time);
+		//27, 30, 29, 28, 25, 27, 23, 32
+	}
+	
+	/**
+	 * My bad solution.
+	 * Better one offered on the site is to find the roots of the end points only. Then just find how many
+	 * integers between them.
+	 */
+	@Test
+	public void sherlockAndSquares(){
+		try(
+				FileReader input = new FileReader("resources/hackerRank/Implementation/sherlockAndSquares#5.txt");
+//				InputStreamReader input = new InputStreamReader(System.in);
+				BufferedReader br = new BufferedReader(input);
+			)
+			{
+				LinkedHashMap<Integer, Integer> squares = new LinkedHashMap<Integer, Integer>(46340);
+				int squareCount = 0;
+				for(int i = 1; i < Integer.MAX_VALUE; i++)
+				{
+					int square = i*i;
+					if (square < Integer.MAX_VALUE && square > 0)
+					{
+						squares.put(square, ++squareCount);
+					}
+					else
+					{
+						break;
+					}
+				}
+				
+				int numTestCases = Integer.parseInt(br.readLine());
+				for(int testCase = 0; testCase < numTestCases; testCase++)
+				{
+					String[] stringValues = br.readLine().split(" ");
+					int firstValue = Integer.parseInt(stringValues[0]);
+					int secondValue = Integer.parseInt(stringValues[1]);
+					
+					int lowerCount = 0;
+					int upperCount = 0;
+					for(int i = firstValue; i <= secondValue; i++ )
+					{
+						if(lowerCount == 0 && squares.containsKey(i)){
+							lowerCount = squares.get(i);
+						}
+						if(upperCount == 0 && squares.containsKey(secondValue + firstValue - i)){
+							upperCount = squares.get(secondValue + firstValue - i);
+						}
+						if(lowerCount != 0 && upperCount != 0){
+							break;
+						}
+					}
+					int result = (lowerCount == 0 ? 0 : (upperCount - lowerCount + 1));
+					System.out.println(result);
+				}
+			} catch (FileNotFoundException e){
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
