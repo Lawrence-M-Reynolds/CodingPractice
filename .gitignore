@@ -7,7 +7,7 @@
 # Or you can do:
 target/
 
-.project
-.classpath
-.settings
+#.project
+#.classpath
+#.settings
 *.log
