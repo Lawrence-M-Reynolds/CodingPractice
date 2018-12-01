@@ -6,6 +6,7 @@
 /*/*/target/
 # Or you can do:
 target/
+bin
 
 .project
 .classpath
