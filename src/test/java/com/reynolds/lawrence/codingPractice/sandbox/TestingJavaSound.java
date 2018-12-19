@@ -1,9 +1,12 @@
-package com.reynolds.lawrence.codingPractice.midi;
+package com.reynolds.lawrence.codingPractice.sandbox;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.URL;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -11,8 +14,10 @@ import java.util.List;
 import java.util.Set;
 
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiEvent;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequence;
+import javax.sound.midi.Track;
 
 import org.junit.Test;
 /**
@@ -44,6 +49,31 @@ public class TestingJavaSound {
 		}
 		System.out.println(typesString.toString());
 		
+		System.out.println("PPQ: " + sequence.PPQ);
+		System.out.println("DivisionType: " + sequence.getDivisionType());
 		
+		/* This is ticks per beat. */
+		System.out.println("Resolution: " + sequence.getResolution());
+		
+		Track[] tracks = sequence.getTracks();
+		for(Track track : tracks) {
+			for(int eventIndex = 0; eventIndex < track.size(); eventIndex++) {
+				MidiEvent midiEvent = track.get(eventIndex);
+				System.out.println("Tick: " + midiEvent.getTick());
+				System.out.println("Length: " + midiEvent.getMessage().getLength());
+				System.out.println("Status: " + midiEvent.getMessage().getStatus());
+				
+				byte[] messageBytes = midiEvent.getMessage().getMessage();
+				for(byte messageByte : messageBytes) {
+					System.out.println("\tmessageByte: " + Integer.toBinaryString(messageByte));
+				}
+				
+				midiEvent.setTick(midiEvent.getTick() + sequence.getResolution() / 2);
+			}
+		}
+		
+		Path path = Paths.get("./output", "testMidiFileOut.mid");
+		
+		MidiSystem.write(sequence, fileTypes[0], path.toFile());
 	}
 }
