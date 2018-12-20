@@ -7,8 +7,11 @@
 # Or you can do:
 target/
 bin
+output/**
 
 .project
 .classpath
 .settings
 *.log
+
+
