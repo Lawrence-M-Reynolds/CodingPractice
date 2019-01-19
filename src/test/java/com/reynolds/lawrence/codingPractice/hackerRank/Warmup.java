@@ -1,9 +1,6 @@
 package com.reynolds.lawrence.codingPractice.hackerRank;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,7 +9,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 public class Warmup {
-//	@Test
+	@Test
     public void withInput() {
     	int n = 0;
     	int posCount = 0;

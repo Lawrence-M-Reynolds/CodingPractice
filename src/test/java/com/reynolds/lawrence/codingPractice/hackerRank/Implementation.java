@@ -1,19 +1,12 @@
 package com.reynolds.lawrence.codingPractice.hackerRank;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.net.URL;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.junit.Test;
 
@@ -22,10 +15,13 @@ public class Implementation {
 	/**
 	 * 12.20 - 12.34
 	 */
-//	@Test
+	@Test
 	public void anrgyProfessor(){
+		final URL fileURL = this.getClass().getClassLoader().getResource("hackerRank/Implementation/angryProfessor.txt");
+		final File file = new File(fileURL.getFile());
+		
 		try(
-				FileReader fr = new FileReader("resources/hackerRank/Implementation/angryProfessor.txt");
+				FileReader fr = new FileReader(file);
 				BufferedReader br = new BufferedReader(fr);
 			)
 			{
@@ -65,10 +61,13 @@ public class Implementation {
 	/**
 	 * 
 	 */
-//	@Test
+	@Test
 	public void sherlockAndTheBeast(){
+		final URL fileURL = this.getClass().getClassLoader().getResource("hackerRank/Implementation/sherlockAndTheBeast.txt");
+		final File file = new File(fileURL.getFile());
+		
 		try(
-				FileReader input = new FileReader("resources/hackerRank/Implementation/sherlockAndTheBeast.txt");
+				FileReader input = new FileReader(file);
 //				InputStreamReader input = new InputStreamReader(System.in);
 				BufferedReader br = new BufferedReader(input);
 			)
@@ -112,10 +111,13 @@ public class Implementation {
 			}
 	}
 	
-//	@Test
+	@Test
 	public void utopianTree(){
+		final URL fileURL = this.getClass().getClassLoader().getResource("hackerRank/Implementation/utopianTree.txt");
+		final File file = new File(fileURL.getFile());
+		
 		try(
-				FileReader input = new FileReader("resources/hackerRank/Implementation/utopianTree.txt");
+				FileReader input = new FileReader(file);
 //				InputStreamReader input = new InputStreamReader(System.in);
 				BufferedReader br = new BufferedReader(input);
 			)
@@ -150,11 +152,14 @@ public class Implementation {
 			}
 	}
 	
-//	@Test
+	@Test
 	public void findDigits(){
 		long start = System.currentTimeMillis();
+		final URL fileURL = this.getClass().getClassLoader().getResource("hackerRank/Implementation/findDigits.txt");
+		final File file = new File(fileURL.getFile());
+		
 		try(
-				FileReader input = new FileReader("resources/hackerRank/Implementation/findDigits.txt");
+				FileReader input = new FileReader(file);
 //				InputStreamReader input = new InputStreamReader(System.in);
 				BufferedReader br = new BufferedReader(input);
 			)
@@ -197,8 +202,11 @@ public class Implementation {
 	 */
 	@Test
 	public void sherlockAndSquares(){
+		final URL fileURL = this.getClass().getClassLoader().getResource("hackerRank/Implementation/sherlockAndSquares_5.txt");
+		final File file = new File(fileURL.getFile());
+		
 		try(
-				FileReader input = new FileReader("resources/hackerRank/Implementation/sherlockAndSquares#5.txt");
+				FileReader input = new FileReader(file);
 //				InputStreamReader input = new InputStreamReader(System.in);
 				BufferedReader br = new BufferedReader(input);
 			)
