@@ -10,7 +10,7 @@ import java.util.LinkedHashMap;
 
 import org.junit.Test;
 
-public class Implementation {
+public class Implementation_Test {
 
 	/**
 	 * 12.20 - 12.34

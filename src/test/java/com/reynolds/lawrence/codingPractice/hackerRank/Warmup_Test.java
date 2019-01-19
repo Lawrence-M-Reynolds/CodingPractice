@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-public class Warmup {
+public class Warmup_Test {
 	@Test
     public void withInput() {
     	int n = 0;
