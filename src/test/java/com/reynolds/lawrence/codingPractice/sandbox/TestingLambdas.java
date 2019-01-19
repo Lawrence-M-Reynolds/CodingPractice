@@ -3,10 +3,10 @@ package com.reynolds.lawrence.codingPractice.sandbox;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.sound.midi.InvalidMidiDataException;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -45,5 +45,45 @@ public class TestingLambdas {
 		long countTest6 = stringList.stream().filter(string -> "test6".equals(string)).count();
 		assertEquals(3, countTest6);
 		
+	}
+	
+	@Test
+	public void testMapAndForEach() throws InvalidMidiDataException, IOException {
+
+		List<String> stringList = new ArrayList<String>();
+		
+		stringList.add("test1");
+		stringList.add("test2");
+		stringList.add("test3");
+		stringList.add("test4");
+		stringList.add("test5");
+		stringList.add("test6");
+		stringList.add("test6");
+		stringList.add("test6");
+		
+		stringList.stream().map(string -> string.toUpperCase()).forEach(uppercased -> System.out.println(uppercased));
+		
+	}
+	
+	@Test
+	public void testCollect() throws InvalidMidiDataException, IOException {
+
+		List<String> stringList = new ArrayList<String>();
+		
+		stringList.add("test1");
+		stringList.add("test2");
+		stringList.add("test3");
+		stringList.add("test4");
+		stringList.add("test5");
+		stringList.add("test6");
+		stringList.add("test6");
+		stringList.add("test6");
+		
+		List<String> filteredList = stringList.stream().filter(string -> "test6".equals(string)).collect(Collectors.toList());
+		assertEquals(3, filteredList.size());
+		
+		for(String string : filteredList){
+			assertEquals("test6", string);
+		}
 	}
 }
