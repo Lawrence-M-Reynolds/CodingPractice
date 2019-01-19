@@ -6,8 +6,10 @@
 /*/*/target/
 # Or you can do:
 target/
+bin
+output/**
 
-#.project
-#.classpath
-#.settings
+.project
+.classpath
+.settings
 *.log
