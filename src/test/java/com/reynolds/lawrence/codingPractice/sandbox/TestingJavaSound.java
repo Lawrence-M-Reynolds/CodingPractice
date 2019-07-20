@@ -37,7 +37,7 @@ import com.reynolds.lawrence.midi.composition.MidiTranslationManager;
 public class TestingJavaSound {
 
 	private static final String OUTPUT_DIRECTORY_PATH = "./output";
-	private static final String TEST_INPUT_MIDI_FILE_PATH = "midi/testMidiFile.mid";
+	private static final String TEST_INPUT_MIDI_FILE_PATH = "midi/testForMidiKeyChange.mid";
 
 	@Test
 	public void callTests() throws InvalidMidiDataException, IOException {
@@ -95,7 +95,7 @@ public class TestingJavaSound {
 			if (trackNum == 0) {
 				/* This is the meta track. Holds info such as tempo changes etc. */
 
-				System.out.println("\n### Meta Track");
+				System.out.println("\n### Meta CompositionTrack");
 
 				for (int eventIndex = 0; eventIndex < track.size(); eventIndex++) {
 					System.out.println("\n####NEW EVENT");
@@ -115,7 +115,7 @@ public class TestingJavaSound {
 						int byteAsUnsignedInt = BinaryUtil.convertSignedIntToByteAsUnsignedInt(messageByte);
 
 						String binaryRepresentation = BinaryUtil.getByteUnSignedIntAsBinaryString(byteAsUnsignedInt);
-						System.out.println("\nMessage Byte: " + binaryRepresentation + " / " + Integer.toHexString(byteAsUnsignedInt));
+						System.out.println("\nMessage Byte: " + binaryRepresentation + " / " + Integer.toHexString(byteAsUnsignedInt) + " / " + byteAsUnsignedInt);
 					}
 
 					/*
@@ -127,7 +127,7 @@ public class TestingJavaSound {
 			} else {
 				/* Regular tracks with the note on/off information as well as meta events. */
 
-				System.out.println("\n### Track Number: " + trackNum);
+				System.out.println("\n### CompositionTrack Number: " + trackNum);
 
 				for (int eventIndex = 0; eventIndex < track.size(); eventIndex++) {
 					System.out.println("\n####NEW EVENT");
@@ -142,7 +142,7 @@ public class TestingJavaSound {
 						int byteAsUnsignedInt = BinaryUtil.convertSignedIntToByteAsUnsignedInt(messageByte);
 
 						String binaryRepresentation = BinaryUtil.getByteUnSignedIntAsBinaryString(byteAsUnsignedInt);
-						System.out.println("\nMessage Byte: " + binaryRepresentation + " / " + Integer.toHexString(byteAsUnsignedInt));
+						System.out.println("\nMessage Byte: " + binaryRepresentation + " / " + Integer.toHexString(byteAsUnsignedInt) + " / " + byteAsUnsignedInt);
 					}
 
 					/*
