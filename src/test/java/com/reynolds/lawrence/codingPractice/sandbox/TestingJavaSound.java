@@ -14,6 +14,7 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Track;
 
+import com.reynolds.lawrence.midi.binary.BinaryUtil;
 import org.junit.Test;
 
 import com.reynolds.lawrence.midi.composition.Composition;
@@ -43,7 +44,7 @@ public class TestingJavaSound {
 		/* Easier to enable/disable relavent tests this way. */
 		//		this.loadFromFile();
 
-		this.createDataModelFromMidiFile();
+		this.loadFromFile();
 	}
 
 	/**
@@ -60,12 +61,15 @@ public class TestingJavaSound {
 		final File testMidiFile = new File(fileURL.getFile());
 		final Sequence sequence = MidiSystem.getSequence(testMidiFile);
 
+		System.out.println("#Generated Midi");
+
+		System.out.println("##Meta Data");
 		/*
 		 * We only expect a file type of "1" where the first track holds some meta event
 		 * data.
 		 */
 		final int[] fileTypes = MidiSystem.getMidiFileTypes(sequence);
-		final StringBuilder typesString = new StringBuilder("file types:");
+		final StringBuilder typesString = new StringBuilder("\nfile types:");
 		for (final int type : fileTypes) {
 			typesString.append(" ");
 			typesString.append(type);
@@ -76,56 +80,75 @@ public class TestingJavaSound {
 		 * We expect to only work in "pulses (ticks) per quarter note". Not frames per
 		 * second.
 		 */
-		System.out.println("DivisionType is PPQ: " + Boolean.toString(sequence.getDivisionType() == Sequence.PPQ));
+		System.out.println("\nDivisionType is PPQ: " + Boolean.toString(sequence.getDivisionType() == Sequence.PPQ));
 
 		/* This is ticks per beat. */
-		System.out.println("Resolution: " + sequence.getResolution());
+		System.out.println("\nResolution: " + sequence.getResolution());
 
 		final Track[] tracks = sequence.getTracks();
-		System.out.println("Number of Tracks: " + tracks.length);
+		System.out.println("\nNumber of Tracks: " + tracks.length);
+
+		System.out.println("##Tracks");
 
 		byte trackNum = 0;
 		for (final Track track : tracks) {
 			if (trackNum == 0) {
 				/* This is the meta track. Holds info such as tempo changes etc. */
 
-				System.out.println("\n******** Meta Track ********");
+				System.out.println("\n### Meta Track");
 
 				for (int eventIndex = 0; eventIndex < track.size(); eventIndex++) {
+					System.out.println("\n####NEW EVENT");
+
 					final MidiEvent midiEvent = track.get(eventIndex);
 
 					/* Delta time - time in ticks from previous event. */
-					System.out.println("Tick: " + midiEvent.getTick());
+					System.out.println("\nTick: " + midiEvent.getTick());
 
 					final MetaMessage metaMessage = (MetaMessage) midiEvent.getMessage();
 
-					System.out.println("Length: " + metaMessage.getLength());
+					System.out.println("\nLength: " + metaMessage.getLength());
 					//					System.out.println("Status: " + metaMessage.getStatus()); // Meta events always have a status of 255
 
 					final byte[] messageBytes = metaMessage.getMessage();
 					for (final byte messageByte : messageBytes) {
-						System.out.println("\tmessageByte: " + Integer.toBinaryString(messageByte));
+						int byteAsUnsignedInt = BinaryUtil.convertSignedIntToByteAsUnsignedInt(messageByte);
+
+						String binaryRepresentation = BinaryUtil.getByteUnSignedIntAsBinaryString(byteAsUnsignedInt);
+						System.out.println("\nMessage Byte: " + binaryRepresentation + " / " + Integer.toHexString(byteAsUnsignedInt));
 					}
 
+					/*
+					sequence.getResolution() is basically the denominator of the time signature. So
+					this is moving by a half beat forwards.
+					 */
 					midiEvent.setTick(midiEvent.getTick() + sequence.getResolution() / 2);
 				}
 			} else {
 				/* Regular tracks with the note on/off information as well as meta events. */
 
-				System.out.println("\n******** Track Number: " + trackNum + " ********");
+				System.out.println("\n### Track Number: " + trackNum);
 
 				for (int eventIndex = 0; eventIndex < track.size(); eventIndex++) {
+					System.out.println("\n####NEW EVENT");
 					final MidiEvent midiEvent = track.get(eventIndex);
 
-					System.out.println("Tick: " + midiEvent.getTick());
-					System.out.println("Length: " + midiEvent.getMessage().getLength());
-					System.out.println("Status: " + midiEvent.getMessage().getStatus());
+					System.out.println("\nTick: " + midiEvent.getTick());
+					System.out.println("\nLength: " + midiEvent.getMessage().getLength());
+					System.out.println("\nStatus: " + midiEvent.getMessage().getStatus());
 
 					final byte[] messageBytes = midiEvent.getMessage().getMessage();
 					for (final byte messageByte : messageBytes) {
-						System.out.println("\tmessageByte: " + Integer.toBinaryString(messageByte));
+						int byteAsUnsignedInt = BinaryUtil.convertSignedIntToByteAsUnsignedInt(messageByte);
+
+						String binaryRepresentation = BinaryUtil.getByteUnSignedIntAsBinaryString(byteAsUnsignedInt);
+						System.out.println("\nMessage Byte: " + binaryRepresentation + " / " + Integer.toHexString(byteAsUnsignedInt));
 					}
 
+					/*
+					sequence.getResolution() is basically the denominator of the time signature. So
+					this is moving by a half beat forwards.
+					 */
 					midiEvent.setTick(midiEvent.getTick() + sequence.getResolution() / 2);
 				}
 			}

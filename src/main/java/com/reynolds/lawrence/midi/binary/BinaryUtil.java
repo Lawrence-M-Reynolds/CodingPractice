@@ -7,4 +7,13 @@ public class BinaryUtil {
 
 	/** 255, 0xFF, or 0b11111111. Used to convert from a signed int to an unsigned int. */
 	public static final int FIRST_EIGHT_BITS_MASK = 0xFF;
+
+	public static int convertSignedIntToByteAsUnsignedInt(int byteAsSignedInt) {
+		return FIRST_EIGHT_BITS_MASK & byteAsSignedInt;
+	}
+
+	public static String getByteUnSignedIntAsBinaryString(int byteAsUnsignedInt) {
+		String b1_IntBinaryAsString = Integer.toBinaryString(byteAsUnsignedInt);
+		return String.format("%8s", b1_IntBinaryAsString).replace(' ', '0');
+	}
 }
