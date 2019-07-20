@@ -124,4 +124,61 @@ public class TestingBinary {
 		} while (i < MAX && i > MIN);
 
 	}
+
+	@Test
+	public void printByteBitsAsString() throws InvalidMidiDataException, IOException {
+
+		final byte b1 = (byte) 127;
+		final byte b2 = (byte) 2;
+		final byte b3 = (byte) -52;
+
+		/* A mask for the first 8 bits of the byte. */
+		short BYTE_MASK = 0xFF;
+
+		/* Apply the mask to the bytes which casts them up to ints. Leading 1's will be removed
+		* beyond the 8 bits so these are no longer signed ints (which uses 2's compliment). */
+		int b1_lsb_int = BYTE_MASK & b1;
+		int b2_lsb_int = BYTE_MASK & b2;
+		int b3_lsb_int = BYTE_MASK & b3;
+
+		/*
+		Getting the string representation of the new 32 bit integers. Note that this function doesn't return
+		leading zeros. So after applying the mask this String will only be 8 characters long or shorter.
+		 */
+		String b1_IntBinaryAsString = Integer.toBinaryString(b1_lsb_int);
+		String b2_IntBinaryAsString = Integer.toBinaryString(b2_lsb_int);
+		String b3_IntBinaryAsString = Integer.toBinaryString(b3_lsb_int);
+
+		/*
+		 Using the formatter here to extract only the 8 least significant bits. It also pads from the left of the
+		 string with spaces if there are not enough characters to make the string up to a length of 8.
+
+		See https://docs.oracle.com/javase/8/docs/api/java/util/Formatter.html#syntax
+
+		"The width is the minimum number of characters to be written to the output. If the length of the converted
+		value is less than the width then the output will be padded by '  ' ('\u0020') until the total number of
+		characters equals the width. The padding is on the left by default. If the '-' flag is given, then the
+		padding will be on the right. If the width is not specified then there is no minimum."
+
+		Width is 8 so the string is padded on the left by default with spaces.
+		The "-" flag would apply the padding from the right. E.g. "%-8s".
+
+		 */
+		final String b1_SpaceBufferedByteBinaryAsString = String.format("%8s", b1_IntBinaryAsString);
+		final String b2_SpaceBufferedByteBinaryAsString = String.format("%8s", b2_IntBinaryAsString);
+		final String b3_SpaceBufferedByteBinaryAsString = String.format("%8s", b3_IntBinaryAsString);
+
+		/*
+		Simply replacing the padded spaces with 0's. This will only be necessary if the string returned having
+		applied the mask was shorter than 8 characters.
+		 */
+		String b1_ByteBinaryAsString = b1_SpaceBufferedByteBinaryAsString.replace(' ', '0');
+		String b2_ByteBinaryAsString = b2_SpaceBufferedByteBinaryAsString.replace(' ', '0');
+		String b3_ByteBinaryAsString = b3_SpaceBufferedByteBinaryAsString.replace(' ', '0');
+
+		System.out.println(b1 + ": " + b1_ByteBinaryAsString); // 10000001
+		System.out.println(b2 + ": " + b2_ByteBinaryAsString); // 10000001
+		System.out.println(b3 + ": " + b3_ByteBinaryAsString); // 10000001
+
+	}
 }
