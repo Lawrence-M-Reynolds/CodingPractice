@@ -12,4 +12,5 @@ output/**
 .project
 .classpath
 .settings
+.idea
 *.log
