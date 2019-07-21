@@ -18,7 +18,7 @@ import javax.sound.midi.SysexMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.reynolds.lawrence.midi.binary.BinaryUtil;
+import com.reynolds.lawrence.midi.binary.ByteConversionUtil;
 import com.reynolds.lawrence.midi.composition.messageType.MessageStatusType;
 import com.reynolds.lawrence.midi.composition.messageType.MetaEventType;
 import com.reynolds.lawrence.midi.composition.messageType.ShortMessageCommandType;
@@ -147,7 +147,7 @@ public class MidiTranslationManager {
 
 	public static int convertSignedIntToUnsignedInt(final int signedInt) {
 		//		return signedInt;
-		return signedInt & BinaryUtil.FIRST_EIGHT_BITS_MASK;
+		return signedInt & ByteConversionUtil.FIRST_EIGHT_BITS_MASK;
 	}
 
 }

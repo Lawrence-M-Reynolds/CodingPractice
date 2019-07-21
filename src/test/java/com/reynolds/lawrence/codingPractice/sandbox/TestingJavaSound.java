@@ -14,7 +14,7 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Track;
 
-import com.reynolds.lawrence.midi.binary.BinaryUtil;
+import com.reynolds.lawrence.midi.binary.ByteConversionUtil;
 import org.junit.Test;
 
 import com.reynolds.lawrence.midi.composition.Composition;
@@ -112,9 +112,9 @@ public class TestingJavaSound {
 
 					final byte[] messageBytes = metaMessage.getMessage();
 					for (final byte messageByte : messageBytes) {
-						int byteAsUnsignedInt = BinaryUtil.convertSignedIntToByteAsUnsignedInt(messageByte);
+						int byteAsUnsignedInt = ByteConversionUtil.convertSignedIntToByteAsUnsignedInt(messageByte);
 
-						String binaryRepresentation = BinaryUtil.getByteUnSignedIntAsBinaryString(byteAsUnsignedInt);
+						String binaryRepresentation = ByteConversionUtil.getByteUnSignedIntAsBinaryString(byteAsUnsignedInt);
 						System.out.println("\nMessage Byte: " + binaryRepresentation + " / " + Integer.toHexString(byteAsUnsignedInt) + " / " + byteAsUnsignedInt);
 					}
 
@@ -139,9 +139,9 @@ public class TestingJavaSound {
 
 					final byte[] messageBytes = midiEvent.getMessage().getMessage();
 					for (final byte messageByte : messageBytes) {
-						int byteAsUnsignedInt = BinaryUtil.convertSignedIntToByteAsUnsignedInt(messageByte);
+						int byteAsUnsignedInt = ByteConversionUtil.convertSignedIntToByteAsUnsignedInt(messageByte);
 
-						String binaryRepresentation = BinaryUtil.getByteUnSignedIntAsBinaryString(byteAsUnsignedInt);
+						String binaryRepresentation = ByteConversionUtil.getByteUnSignedIntAsBinaryString(byteAsUnsignedInt);
 						System.out.println("\nMessage Byte: " + binaryRepresentation + " / " + Integer.toHexString(byteAsUnsignedInt) + " / " + byteAsUnsignedInt);
 					}
 

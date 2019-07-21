@@ -7,7 +7,7 @@ import javax.sound.midi.MetaMessage;
 import javax.sound.midi.ShortMessage;
 import javax.sound.midi.SysexMessage;
 
-import com.reynolds.lawrence.midi.binary.BinaryUtil;
+import com.reynolds.lawrence.midi.binary.ByteConversionUtil;
 
 /**
 *
@@ -65,13 +65,13 @@ public enum MessageStatusType {
 
 	public static MessageStatusType getMessageStatusTypeFromTypeDataByte(final int typeDataByte) {
 		MessageStatusType messageStatusType;
-		if (typeDataByte < BinaryUtil.FIRST_FOUR_BITS_MASK) {
+		if (typeDataByte < ByteConversionUtil.FIRST_FOUR_BITS_MASK) {
 			/*
 			 * Status messages less than 240 use only the first four bits to indicate the status. The
 			 * rest are used to define the channel. See:
 			 * https://www.midi.org/specifications/item/table-1-summary-of-midi-message
 			 */
-			messageStatusType = typeDataByteToMessageStatusTypeMap.get(typeDataByte & BinaryUtil.FIRST_FOUR_BITS_MASK);
+			messageStatusType = typeDataByteToMessageStatusTypeMap.get(typeDataByte & ByteConversionUtil.FIRST_FOUR_BITS_MASK);
 		} else {
 			messageStatusType = typeDataByteToMessageStatusTypeMap.get(typeDataByte);
 		}
