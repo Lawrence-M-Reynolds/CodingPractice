@@ -1,7 +1,8 @@
 #Understanding midi
 
 ##Reference
-- [API](https://docs.oracle.com/javase/7/docs/api/javax/sound/midi/MidiEvent.html)
+- [API](https://docs.oracle.com/javase/8/docs/api/javax/sound/midi/package-summary.html)
+- [API Guide](https://docs.oracle.com/javase/8/docs/technotes/guides/sound/programmer_guide/chapter1.html)
 - [Midi Message bytes](https://www.midi.org/specifications/item/table-1-summary-of-midi-message)
 - [Midi notes](http://www.indiana.edu/~emusic/etext/MIDI/chapter3_MIDI4.shtml)
 
@@ -35,4 +36,4 @@ zero velocity to turn off that same note. The status byte of the second note on 
 same as the status byte of the previous note on message (assuming there are no messages in between).
 
 ##Interpreting the messages.
-
+Ignoring system mess
