@@ -13,4 +13,5 @@ output/**
 .classpath
 .settings
 .idea
+*.iml
 *.log
