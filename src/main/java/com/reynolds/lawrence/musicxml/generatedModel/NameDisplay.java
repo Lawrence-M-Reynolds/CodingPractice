@@ -53,7 +53,7 @@ public class NameDisplay {
         @XmlElement(name = "display-text", type = FormattedText.class),
         @XmlElement(name = "accidental-text", type = AccidentalText.class)
     })
-    protected List<Object> displayTextOrAccidentalText;
+    protected List<FormattedText> displayTextOrAccidentalText;
     @XmlAttribute(name = "print-object")
     protected YesNo printObject;
 
@@ -80,9 +80,9 @@ public class NameDisplay {
      * 
      * 
      */
-    public List<Object> getDisplayTextOrAccidentalText() {
+    public List<FormattedText> getDisplayTextOrAccidentalText() {
         if (displayTextOrAccidentalText == null) {
-            displayTextOrAccidentalText = new ArrayList<Object>();
+            displayTextOrAccidentalText = new ArrayList<FormattedText>();
         }
         return this.displayTextOrAccidentalText;
     }
