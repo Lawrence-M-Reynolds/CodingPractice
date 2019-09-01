@@ -54,7 +54,7 @@ public class PartList {
     @XmlElement(name = "part-group")
     protected List<PartGroup> partGroup;
     @XmlElement(name = "score-part", required = true)
-    protected ScorePart scorePart;
+    protected List<ScorePart> scorePart;
     @XmlElements({
         @XmlElement(name = "part-group", type = PartGroup.class),
         @XmlElement(name = "score-part", type = ScorePart.class)
@@ -98,19 +98,19 @@ public class PartList {
      *     {@link ScorePart }
      *     
      */
-    public ScorePart getScorePart() {
+    public List<ScorePart> getScorePart() {
         return scorePart;
     }
 
     /**
      * Sets the value of the scorePart property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link ScorePart }
      *     
      */
-    public void setScorePart(ScorePart value) {
+    public void setScorePart(List<ScorePart> value) {
         this.scorePart = value;
     }
 
