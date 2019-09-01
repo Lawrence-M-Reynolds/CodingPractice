@@ -368,7 +368,7 @@ public class ScorePartwise {
         @XmlAttribute(name = "id", required = true)
         @XmlIDREF
         @XmlSchemaType(name = "IDREF")
-        protected Object id;
+        protected ScorePart id;
 
         /**
          * Gets the value of the measure property.
@@ -407,20 +407,20 @@ public class ScorePartwise {
          *     {@link Object }
          *     
          */
-        public Object getId() {
+        public ScorePart getId() {
             return id;
         }
 
         /**
          * Sets the value of the id property.
          * 
-         * @param value
+         * @param scorePart
          *     allowed object is
          *     {@link Object }
          *     
          */
-        public void setId(Object value) {
-            this.id = value;
+        public void setId(ScorePart scorePart) {
+            this.id = scorePart;
         }
 
 
