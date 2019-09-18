@@ -1,30 +1,24 @@
 package com.reynolds.lawrence.codingPractice.sandbox;
 
 import com.reynolds.lawrence.musicxml.generatedModel.*;
+import com.reynolds.lawrence.musicxml.nbf.NoteOrBackupOrForwardProcessor;
 import org.junit.Test;
-import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.*;
 import javax.xml.transform.Source;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.ValidatorHandler;
 import java.io.*;
 import java.lang.String;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 
 /**
  * Sandbox tests for music XML with ProxyMusic library investigation.
@@ -180,98 +174,19 @@ public class TestingMusicXml {
 
 		ScorePartwise scorePartwise = loadScorePartwiseFromXML(testInputFilePath, jc);
 
-		scorePartwise.getPart().get(0).getMeasure().get(0).getNoteOrBackupOrForward().get(0).getClass();
 		for(ScorePartwise.Part part : scorePartwise.getPart()) {
 			System.out.println("************\n");
 			System.out.println("\tProcessing Part: " + part.getId().getPartNameDisplay().getDisplayTextOrAccidentalText().get(0).getValue());
 			for(ScorePartwise.Part.Measure measure : part.getMeasure()){
 				System.out.println("\t\tProcessing measure: " + measure.getNumber());
 				for(Object noteOrBackupOrForwardValue : measure.getNoteOrBackupOrForward()){
-					if(noteOrBackupOrForwardValue instanceof Note){
-						processNoteOrBackupOrForward((Note)noteOrBackupOrForwardValue);
-					} else if(noteOrBackupOrForwardValue instanceof Backup){
-						processNoteOrBackupOrForward((Backup)noteOrBackupOrForwardValue);
-					} else if(noteOrBackupOrForwardValue instanceof Forward){
-						processNoteOrBackupOrForward((Forward)noteOrBackupOrForwardValue);
-					} else if(noteOrBackupOrForwardValue instanceof Direction){
-						processNoteOrBackupOrForward((Direction)noteOrBackupOrForwardValue);
-					} else if(noteOrBackupOrForwardValue instanceof Attributes){
-						processNoteOrBackupOrForward((Attributes)noteOrBackupOrForwardValue);
-					} else if(noteOrBackupOrForwardValue instanceof Harmony){
-						processNoteOrBackupOrForward((Harmony)noteOrBackupOrForwardValue);
-					} else if(noteOrBackupOrForwardValue instanceof FiguredBass){
-						processNoteOrBackupOrForward((FiguredBass)noteOrBackupOrForwardValue);
-					} else if(noteOrBackupOrForwardValue instanceof Print){
-						processNoteOrBackupOrForward((Print)noteOrBackupOrForwardValue);
-					} else if(noteOrBackupOrForwardValue instanceof Sound){
-						processNoteOrBackupOrForward((Sound)noteOrBackupOrForwardValue);
-					} else if(noteOrBackupOrForwardValue instanceof Barline){
-						processNoteOrBackupOrForward((Barline)noteOrBackupOrForwardValue);
-					} else if(noteOrBackupOrForwardValue instanceof Grouping){
-						processNoteOrBackupOrForward((Grouping)noteOrBackupOrForwardValue);
-					} else if(noteOrBackupOrForwardValue instanceof Link){
-						processNoteOrBackupOrForward((Link)noteOrBackupOrForwardValue);
-					} else if(noteOrBackupOrForwardValue instanceof Bookmark){
-						processNoteOrBackupOrForward((Bookmark)noteOrBackupOrForwardValue);
-					}
+					NoteOrBackupOrForwardProcessor.process(noteOrBackupOrForwardValue);
 				}
 			}
 		}
 
 		persistPartwiseToXml(outputFileName, jc, scorePartwise);
 
-	}
-
-	private void processNoteOrBackupOrForward(Note note) {
-		System.out.println("Processing Note: " + note);
-	}
-
-	private void processNoteOrBackupOrForward(Backup backup) {
-		System.out.println("Processing backup: " + backup);
-	}
-
-	private void processNoteOrBackupOrForward(Forward forward) {
-		System.out.println("Processing forward: " + forward);
-	}
-
-	private void processNoteOrBackupOrForward(Direction direction) {
-		System.out.println("Processing direction: " + direction);
-	}
-
-	private void processNoteOrBackupOrForward(Attributes attributes) {
-		System.out.println("Processing attributes: " + attributes);
-	}
-
-	private void processNoteOrBackupOrForward(Harmony harmony) {
-		System.out.println("Processing harmony: " + harmony);
-	}
-
-	private void processNoteOrBackupOrForward(FiguredBass figuredBass) {
-		System.out.println("Processing figuredBass: " + figuredBass);
-	}
-
-	private void processNoteOrBackupOrForward(Print print) {
-		System.out.println("Processing print: " + print);
-	}
-
-	private void processNoteOrBackupOrForward(Sound sound) {
-		System.out.println("Processing sound: " + sound);
-	}
-
-	private void processNoteOrBackupOrForward(Barline barline) {
-		System.out.println("Processing barline: " + barline);
-	}
-
-	private void processNoteOrBackupOrForward(Grouping grouping) {
-		System.out.println("Processing grouping: " + grouping);
-	}
-
-	private void processNoteOrBackupOrForward(Link link) {
-		System.out.println("Processing link: " + link);
-	}
-
-	private void processNoteOrBackupOrForward(Bookmark bookmark) {
-		System.out.println("Processing bookmark: " + bookmark);
 	}
 
 }
