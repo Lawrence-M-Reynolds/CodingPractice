@@ -22,7 +22,9 @@ import java.util.List;
 
 /**
  * Sandbox tests for music XML with ProxyMusic library investigation.
- *
+ * <p>
+ *     Note: tests must be run with parameters "-ea -Djavax.xml.accessExternalDTD=all" for the XML parsing to run.
+ * </p>
  * @see
  *      <ul>
  *      	<li><a href="https://www.musicxml.com/for-developers/">musicxml</a></li>
