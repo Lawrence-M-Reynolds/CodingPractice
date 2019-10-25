@@ -3,11 +3,16 @@ package com.reynolds.lawrence.codingPractice.sandbox;
 import com.reynolds.lawrence.musicxml.generatedModel.*;
 import com.reynolds.lawrence.musicxml.nbf.NoteOrBackupOrForwardProcessor;
 import org.junit.Test;
+import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.*;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.Source;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.validation.Schema;
@@ -18,13 +23,9 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
 /**
  * Sandbox tests for music XML with ProxyMusic library investigation.
- * <p>
- *     Note: tests must be run with parameters "-ea -Djavax.xml.accessExternalDTD=all" for the XML parsing to run.
- * </p>
  * @see
  *      <ul>
  *      	<li><a href="https://www.musicxml.com/for-developers/">musicxml</a></li>
@@ -125,12 +126,11 @@ public class TestingMusicXml {
 		marshaller.marshal(scorePartwise, os);
 	}
 
-	private ScorePartwise loadScorePartwiseFromXML(String testInputFilePath, JAXBContext jc) throws JAXBException, FileNotFoundException, SAXException {
+	private ScorePartwise loadScorePartwiseFromXML(String testInputFilePath, JAXBContext jc)
+			throws JAXBException, FileNotFoundException, SAXException, ParserConfigurationException {
+
 		Unmarshaller unmarshaller = jc.createUnmarshaller();
 
-		final URL fileURL = this.getClass().getClassLoader().getResource(testInputFilePath);
-
-		final File testInputFile = new File(fileURL.getFile());
 		SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
 		URL xmlXsdResourceURL = this.getClass().getClassLoader().getResource("musicXml/musicxml-3.1/schema/xml.xsd");
@@ -155,7 +155,28 @@ public class TestingMusicXml {
 		});
 
 		unmarshaller.setSchema(schema);
-		return (ScorePartwise) unmarshaller.unmarshal(testInputFile);
+
+		final URL fileURL = this.getClass().getClassLoader().getResource(testInputFilePath);
+		return (ScorePartwise) unmarshaller.unmarshal(getSource(fileURL.getFile()));
+	}
+
+	private static SAXSource getSource(String pathToFile)
+			throws SAXException, FileNotFoundException, ParserConfigurationException {
+
+			SAXParserFactory parserFactory = SAXParserFactory.newInstance();
+			parserFactory.setNamespaceAware(true);
+			SAXParser saxParser = parserFactory.newSAXParser();
+			XMLReader xmlReader = saxParser.getXMLReader();
+			xmlReader.setEntityResolver(new EntityResolver() {
+				@Override
+				public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+					return new InputSource( new ByteArrayInputStream( "".getBytes() ) );
+				}
+
+			});
+			InputSource inSrc = new InputSource(new FileReader(pathToFile));
+			return new SAXSource(xmlReader, inSrc);
+
 	}
 
 	/**
@@ -166,7 +187,7 @@ public class TestingMusicXml {
 	 * @throws IOException
 	 */
 	@Test
-	public void switchVoicesAround() throws JAXBException, SAXException, IOException {
+	public void switchVoicesAround() throws JAXBException, SAXException, IOException, ParserConfigurationException {
 		final String testInputFilePath = "musicXml/testForMidiKeyChange.xml";
 		final String outputFileName = "testXmlVoiceSwitchedFileOut.xml";
 
